@@ -1,17 +1,19 @@
-export default (options = {}) => {
+import pkg from './package.json';
 
+export default (options = {}) => {
 	const convertFormat = (countries) => {
 		return countries.map((countryData) => [
 			countryData.countryName,
 			countryData.countryShortCode,
-			countryData.regions.map((regionData) => `${regionData.name}~${regionData.shortCode}`).join('|')
+			countryData.regions.map((regionData) => `${regionData.name}~${regionData.shortCode}~${regionData.type}`).join('|')
 		]);
 	};
 
 	return {
 		name: 'ParseCountryList',
 		transform: (source, id) => {
-			if (!(/country-region-data\/data\.json$/.test(id))) {
+			if ((!pkg.os.includes('win32') && !(/country-region-data\/data\.json$/.test(id))) ||
+				(pkg.os.includes('win32') && !(/country-region-data\\data\.json$/.test(id)))) {
 				return;
 			}
 
