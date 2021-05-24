@@ -182,7 +182,7 @@ Examples of configuration for the United Kingdom
 - Metropolitan and Non-Metropolitan Counties  
 `regionTypes['GB'] = ['50', '52']`
 - Counties of the United Kingdom
-`regionTypes['GB'] = ['10, '25', '35', '42']
+`regionTypes['GB'] = ['10', '25', '35', '42']
 
 United States
 Examples of configuration for the United Kingdom
