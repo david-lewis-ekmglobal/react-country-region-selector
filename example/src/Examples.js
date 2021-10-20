@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import { CountryDropdown, CountryDropdownSelect, RegionDropdown, RegionDropdownSelect } from 'react-country-region-selector';
 
 class Examples extends Component {
 	constructor (props) {
@@ -15,20 +15,25 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(0)}
 									onChange={(val) => this.selectCountry(0, val)} />
-								<RegionDropdown
-									country={this.getCountryValue(0)}
+								<RegionDropdownSelect
+									country={this.getCountry(0)}
 									value={this.getRegionValue(0)}
 									onChange={(val) => this.selectRegion(0, val)} />
+								<RegionDropdownSelect
+									country={this.getCountry(0)}
+									value={this.getRegionTwoValue(0)}
+									onChange={(val) => this.selectRegionTwo(0, val)} />
 							</div>
 						);
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  value={country}\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  country={country}\n  value={region}\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null,
+					region2: null
 				},
 
 				{
@@ -36,12 +41,12 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(1)}
 									onChange={(val) => this.selectCountry(1, val)}/>
-								<RegionDropdown
+								<RegionDropdownSelect
 									disableWhenEmpty={true}
-									country={this.getCountryValue(1)}
+									country={this.getCountry(1)}
 									value={this.getRegionValue(1)}
 									onChange={(val) => this.selectRegion(1, val)}/>
 							</div>
@@ -49,8 +54,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  value={country}\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  disableWhenEmpty={true}\n  country={country}\n  value={region}\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -58,13 +63,13 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									showDefaultOption={false}
 									value={this.getCountryValue(2)}
 									onChange={(val) => this.selectCountry(2, val)}/>
-								<RegionDropdown
+								<RegionDropdownSelect
 									showDefaultOption={false}
-									country={this.getCountryValue(2)}
+									country={this.getCountry(2)}
 									value={this.getRegionValue(2)}
 									onChange={(val) => this.selectRegion(2, val)}/>
 							</div>
@@ -72,8 +77,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  showDefaultOption={false}\n  value={country}\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  showDefaultOption={false}\n  country={country}\n  value={region}\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -81,14 +86,14 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									defaultOptionLabel="Select a country, man."
 									value={this.getCountryValue(3)}
 									onChange={(val) => this.selectCountry(3, val)}/>
-								<RegionDropdown
+								<RegionDropdownSelect
 									blankOptionLabel="No country selected, man."
 									defaultOptionLabel="Now select a region, pal."
-									country={this.getCountryValue(3)}
+									country={this.getCountry(3)}
 									value={this.getRegionValue(3)}
 									onChange={(val) => this.selectRegion(3, val)}/>
 							</div>
@@ -96,8 +101,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  defaultOptionLabel="Select a country, man."\n  value={country}\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  blankOptionLabel="No country selected, man."\n  defaultOptionLabel="Now select a region, pal."\n  country={country}\n  value={region}\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -105,14 +110,14 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(4)}
 									id="my-country-field-id"
 									name="my-country-field"
 									classes="my-custom-class second-class"
 									onChange={(val) => this.selectCountry(4, val)}/>
-								<RegionDropdown
-									country={this.getCountryValue(4)}
+								<RegionDropdownSelect
+									country={this.getCountry(4)}
 									value={this.getRegionValue(4)}
 									name="my-region-field-name"
 									id="my-region-field-id"
@@ -123,8 +128,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  value={country}\n  id="my-country-field-id"\n  name="my-country-field"\n  classes="my-custom-class second-class"\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  country={country}\n  value={region}\n  name="my-region-field-name"\n  id="my-region-field-id"\n  classes="another-custom-class"\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -132,13 +137,13 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(5)}
 									labelType="short"
 									valueType="short"
 									onChange={(val) => this.selectCountry(5, val)}/>
-								<RegionDropdown
-									country={this.getCountryValue(5)}
+								<RegionDropdownSelect
+									country={this.getCountry(5)}
 									value={this.getRegionValue(5)}
 									countryValueType="short"
 									labelType="short"
@@ -149,8 +154,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  value={country}\n  labelType="short"\n  valueType="short"\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  country={country}\n  value={region}\n  countryValueType="short"\n  labelType="short"\n  valueType="short"\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -158,12 +163,12 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(6)}
 									onChange={(val) => this.selectCountry(6, val)}
 									whitelist={['GB', 'US', 'CA']} />
-								<RegionDropdown
-									country={this.getCountryValue(6)}
+								<RegionDropdownSelect
+									country={this.getCountry(6)}
 									value={this.getRegionValue(6)}
 									onChange={(val) => this.selectRegion(6, val)}/>
 							</div>
@@ -171,8 +176,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  value={country}\n  labelType="short"\n  valueType="short"\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  country={country}\n  value={region}\n  countryValueType="short"\n  labelType="short"\n  valueType="short"\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -180,12 +185,12 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(7)}
 									onChange={(val) => this.selectCountry(7, val)}
 									blacklist={['AF', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AQ', 'AG', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ']}/>
-								<RegionDropdown
-									country={this.getCountryValue(7)}
+								<RegionDropdownSelect
+									country={this.getCountry(7)}
 									value={this.getRegionValue(7)}
 									onChange={(val) => this.selectRegion(7, val)}/>
 							</div>
@@ -193,8 +198,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: "&lt;CountryDropdown\n  value={country}\n  onChange={selectCountry}\n  blacklist={['AF','AX','AL','DZ','AS','AD','AO','AI','AQ','AG']} />\n&lt;RegionDropdown\n  country={country}\n  value={region}\n  onChange={selectRegion} />",
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -202,13 +207,13 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(8)}
 									onChange={(val) => this.selectCountry(8, val)}
 									blacklist={['AF', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AQ', 'AG', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ']}
 									disabled={true}/>
-								<RegionDropdown
-									country={this.getCountryValue(8)}
+								<RegionDropdownSelect
+									country={this.getCountry(8)}
 									value={this.getRegionValue(8)}
 									onChange={(val) => this.selectRegion(8, val)}
 									disabled={true}/>
@@ -217,8 +222,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: "&lt;CountryDropdown\n  value=\"United States\"\n  onChange={selectCountry}\n  disabled={true} />\n&lt;RegionDropdown\n  country={country}\n  value=\"Washington\"\n  onChange={selectRegion}\n disabled={true} />",
-					country: 'United States',
-					region: 'Washington'
+					country: { value: 'United States', label: 'United States' },
+					region: { value: 'Washington', label: 'Washington' }
 				},
 
 				{
@@ -226,12 +231,12 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(9)}
 									onChange={(val) => this.selectCountry(9, val)}
 								/>
-								<RegionDropdown
-									country={this.getCountryValue(9)}
+								<RegionDropdownSelect
+									country={this.getCountry(9)}
 									value={this.getRegionValue(9)}
 									onChange={(val) => this.selectRegion(9, val)}
 									blacklist={{
@@ -244,8 +249,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: "&lt;CountryDropdown\n  value={this.getCountryValue(9)}\n  onChange={(val) => this.selectCountry(9, val)}\n  whitelist={[\"CA\", \"US\"]} />\n&lt;RegionDropdown\n  country={this.getCountryValue(9)}\n  value={this.getRegionValue(9)}\\n  onChange={(val) => this.selectRegion(9, val)}\n  blacklist={{\n    CA: [\"Alberta\"],\n    US: [\"Washington\", \"Oregon\"]\n  }}\n/>",
-					country: 'United States',
-					region: 'Alabama'
+					country: { value: 'United States', label: 'United States' },
+					region: { value: 'Alabama', label: 'Alabama' }
 				},
 
 				{
@@ -253,13 +258,13 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(10)}
 									onChange={(val) => this.selectCountry(10, val)}
 									whitelist={['CA', 'US']}
 								/>
-								<RegionDropdown
-									country={this.getCountryValue(10)}
+								<RegionDropdownSelect
+									country={this.getCountry(10)}
 									value={this.getRegionValue(10)}
 									onChange={(val) => this.selectRegion(10, val)}
 									whitelist={{
@@ -272,8 +277,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: "&lt;CountryDropdown\n  value={this.getCountryValue(10)}\n  onChange={(val) => this.selectCountry(10, val)}\n  whitelist={[\"CA\", \"US\"]}\n/>\n&lt;RegionDropdown\n  country={this.getCountryValue(10)}\n  value={this.getRegionValue(10)}\n  onChange={(val) => this.selectRegion(10, val)}\n  whitelist={{\n    CA: [\"BC\", \"AB\", \"MB\"],\n    US: [\"Washington\", \"Oregon\", \"Illinois\"]\n  }}\n/>",
-					country: 'United States',
-					region: 'Washington'
+					country: { value: 'United States', label: 'United States' },
+					region: { value: 'Washington', label: 'Washington' }
 				},
 
 				{
@@ -281,13 +286,13 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
+								<CountryDropdownSelect
 									value={this.getCountryValue(11)}
 									onChange={(val) => this.selectCountry(11, val)}
 									whitelist={['CA', 'US']}
 								/>
-								<RegionDropdown
-									country={this.getCountryValue(11)}
+								<RegionDropdownSelect
+									country={this.getCountry(11)}
 									value={this.getRegionValue(11)}
 									onChange={(val) => this.selectRegion(11, val)}
 									regionTypes={{
@@ -299,8 +304,8 @@ class Examples extends Component {
 					},
 					codeVisible: false,
 					code: "&lt;CountryDropdown\n  value={this.getCountryValue(10)}\n  onChange={(val) => this.selectCountry(10, val)}\n  whitelist={[\"CA\", \"US\"]}\n/>\n&lt;RegionDropdown\n  country={this.getCountryValue(10)}\n  value={this.getRegionValue(10)}\n  onChange={(val) => this.selectRegion(10, val)}\n  regionTypes={{\n    US: [\"110\"]\n  }}\n/>",
-					country: 'United States',
-					region: ''
+					country: { value: 'United States', label: 'United States' },
+					region: null
 				},
 				
 				{
@@ -309,8 +314,8 @@ class Examples extends Component {
 						return (
 							<div>
 								<CountryDropdown
-									value={this.getCountryValue(11)}
-									onChange={(val) => this.selectCountry(11, val)}
+									value={this.getCountryValue(12)}
+									onChange={(val) => this.selectCountry(12, val)}
 									style={{
 										backgroundColor: 'blue',
 										color: 'white',
@@ -318,9 +323,9 @@ class Examples extends Component {
 									}}
 									tabIndex={1000}/>
 								<RegionDropdown
-									country={this.getCountryValue(11)}
-									value={this.getRegionValue(11)}
-									onChange={(val) => this.selectRegion(11, val)}
+									country={this.getCountryValue(12)}
+									value={this.getRegionValue(12) ? this.getRegionValue(12) : undefined}
+									onChange={(val) => this.selectRegion(12, val)}
 									style={{
 										backgroundColor: 'green',
 										color: 'white'
@@ -336,25 +341,99 @@ class Examples extends Component {
 				},
 
 				{
+					label: 'Styles passed to Country and Region dropdown Select',
+					jsx: () => {
+						return (
+							<div>
+								<CountryDropdownSelect
+									value={this.getCountryValue(13)}
+									onChange={(val) => this.selectCountry(13, val)}
+									styles={{ control: base => ({
+										...base,
+										backgroundColor: 'blue'
+									}),
+									menuList: base => ({
+										...base,
+										backgroundColor: 'blue',
+										color: 'white',
+										fontSize: 20
+									}),
+									option: (base, { data, isDisabled, isFocused, isSelected }) => ({
+										...base,
+										backgroundColor: isFocused
+											? 'lightgrey'
+											: isSelected
+											? 'lightgrey'
+											: null 
+									}),
+									placeholder: base => ({
+										...base,
+										color: 'white',
+										fontSize: 20
+									}),
+									singleValue: base => ({
+										...base,
+										color: 'white',
+										fontSize: 20
+									}) }}/>
+								<RegionDropdownSelect
+									country={this.getCountry(13)}
+									value={this.getRegionValue(13)}
+									onChange={(val) => this.selectRegion(13, val)}
+									styles={{ control: base => ({
+										...base,
+										backgroundColor: 'green'
+									}),
+									menuList: base => ({
+										...base,
+										backgroundColor: 'green',
+										color: 'white'
+									}),
+									option: (base, { data, isDisabled, isFocused, isSelected }) => ({
+										...base,
+										backgroundColor: isFocused
+											? 'lightgrey'
+											: isSelected
+											? 'lightgrey'
+											: null 
+									}),
+									placeholder: base => ({
+										...base,
+										color: 'white'
+									}),
+									singleValue: base => ({
+										...base,
+										color: 'white'
+									}) }}/>
+							</div>
+						);
+					},
+					codeVisible: false,
+					code: "&lt;CountryDropdown\n  value=\"United States\"\n  onChange={selectCountry}\n  style={{\n    backgroundColor: 'blue',\n    color: 'white',\n    fontSize: 20\n}}\n  tabIndex={1000}\n  disabled={true} />\n&lt;RegionDropdown\n  country={country}\n  value=\"Washington\"\n  onChange={selectRegion}\n  style={{\n    backgroundColor: 'green',\n    color: 'white']\n  }}\n  tabIndex={1001}\n  disabled={true} />",
+					country: null,
+					region: null
+				},
+				
+				{
 					label: 'With custom options in the RegionDropdown.',
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
-									value={this.getCountryValue(12)}
-									onChange={(val) => this.selectCountry(12, val)}/>
-								<RegionDropdown
-									country={this.getCountryValue(12)}
-									value={this.getRegionValue(12)}
+								<CountryDropdownSelect
+									value={this.getCountryValue(14)}
+									onChange={(val) => this.selectCountry(14, val)}/>
+								<RegionDropdownSelect
+									country={this.getCountry(14)}
+									value={this.getRegionValue(14)}
 									customOptions={['-- Custom option 1', '-- Custom option 2']}
-									onChange={(val) => this.selectRegion(12, val)}/>
+									onChange={(val) => this.selectRegion(14, val)}/>
 							</div>
 						);
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  value={country}\n  onChange={selectCountry} />\n&lt;RegionDropdown\n  country={country}\n  value={region}\n  onChange={selectRegion}\n  customOptions={[\'-- Custom option 1\', \'-- Custom option 2\']} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				},
 
 				{
@@ -362,22 +441,23 @@ class Examples extends Component {
 					jsx: () => {
 						return (
 							<div>
-								<CountryDropdown
-									value={this.getCountryValue(13)}
-									onChange={(val) => this.selectCountry(13, val)}
+								<CountryDropdownSelect
+									value={this.getCountryValue(15)}
+									onChange={(val) => this.selectCountry(15, val)}
 									priorityOptions={['CA', 'US', 'GB']} />
-								<RegionDropdown
-									country={this.getCountryValue(13)}
-									value={this.getRegionValue(13)}
-									onChange={(val) => this.selectRegion(13, val)} />
+								<RegionDropdownSelect
+									country={this.getCountry(15)}
+									value={this.getRegionValue(15)}
+									onChange={(val) => this.selectRegion(15, val)} />
 							</div>
 						);
 					},
 					codeVisible: false,
 					code: '&lt;CountryDropdown\n  value={country}\n  onChange={selectCountry}\n  priorityOptions={["CA", "US", "GB"]} />\n&lt;RegionDropdown\n  country={country}\n  value={region}\n  onChange={selectRegion} />',
-					country: '',
-					region: ''
+					country: null,
+					region: null
 				}
+								
 			]
 		};
 	}
@@ -385,6 +465,7 @@ class Examples extends Component {
 	selectCountry (exampleIndex, val) {
 		const updatedValues = this.state.examples;
 		updatedValues[exampleIndex].country = val;
+		updatedValues[exampleIndex].region = null;
 		this.setState({ examples: updatedValues });
 	}
 
@@ -394,12 +475,26 @@ class Examples extends Component {
 		this.setState({ examples: updatedValues });
 	}
 
+	selectRegionTwo (exampleIndex, val) {
+		const updatedValues = this.state.examples;
+		updatedValues[exampleIndex].region2 = val;
+		this.setState({ examples: updatedValues });
+	}
+
 	getCountryValue (index) {
 		return this.state.examples[index].country;
 	}
 
+	getCountry (index) {
+		return this.state.examples[index].country ? this.state.examples[index].country.value : null;
+	}
+
 	getRegionValue (index) {
 		return this.state.examples[index].region;
+	}
+
+	getRegionTwoValue (index) {
+		return this.state.examples[index].region2;
 	}
 
 	toggleCode (exampleIndex) {
