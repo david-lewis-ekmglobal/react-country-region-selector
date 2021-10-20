@@ -277,6 +277,33 @@ class Examples extends Component {
 				},
 
 				{
+					label: 'Include specific region types (US States).',
+					jsx: () => {
+						return (
+							<div>
+								<CountryDropdown
+									value={this.getCountryValue(11)}
+									onChange={(val) => this.selectCountry(11, val)}
+									whitelist={['CA', 'US']}
+								/>
+								<RegionDropdown
+									country={this.getCountryValue(11)}
+									value={this.getRegionValue(11)}
+									onChange={(val) => this.selectRegion(11, val)}
+									regionTypes={{
+										US: ['110']
+									}}
+								/>
+							</div>
+						);
+					},
+					codeVisible: false,
+					code: "&lt;CountryDropdown\n  value={this.getCountryValue(10)}\n  onChange={(val) => this.selectCountry(10, val)}\n  whitelist={[\"CA\", \"US\"]}\n/>\n&lt;RegionDropdown\n  country={this.getCountryValue(10)}\n  value={this.getRegionValue(10)}\n  onChange={(val) => this.selectRegion(10, val)}\n  regionTypes={{\n    US: [\"110\"]\n  }}\n/>",
+					country: 'United States',
+					region: ''
+				},
+				
+				{
 					label: 'Arbitrary attributes (style, tabindex) passed to Country and Region dropdown',
 					jsx: () => {
 						return (

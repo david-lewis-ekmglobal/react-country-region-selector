@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/country-regions/react-country-region-selector.git"
+    "url": "https://github.com/david-lewis-ekmglobal/react-country-region-selector.git"
   },
   "main": "dist/rcrs.js",
   "module": "dist/rcrs.es.js",
@@ -16,6 +16,9 @@
     "node": ">=8",
     "npm": ">=5"
   },
+  "os": [
+    "win32"
+  ],
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
@@ -37,7 +40,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "country-region-data": "^1.10.0",
+    "country-region-data": "file:lib/country-region-data-1.7.0.tgz",
     "cross-env": "^5.1.4",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",

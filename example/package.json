@@ -7,9 +7,9 @@
   "dependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.9.0",
+    "react-country-region-selector": "file:../",
     "react-dom": "^16.9.0",
-    "react-scripts": "^1.1.4",
-    "react-country-region-selector": "file:../"
+    "react-scripts": "^1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

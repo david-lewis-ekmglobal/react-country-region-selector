@@ -58,7 +58,7 @@ export default class RegionDropdown extends PureComponent {
 			return [];
 		}
 
-		const { countryValueType, whitelist, blacklist } = this.props;
+		const { countryValueType, whitelist, blacklist, regionTypes } = this.props;
 		const searchIndex = (countryValueType === C.DISPLAY_TYPE_FULL) ? 0 : 1;
 		let regions = [];
 		CountryRegionData.forEach((i) => {
@@ -74,7 +74,7 @@ export default class RegionDropdown extends PureComponent {
 			return [];
 		}
 
-		const filteredRegions = filterRegions(regions, whitelist, blacklist);
+		const filteredRegions = filterRegions(regions, whitelist, blacklist, regionTypes);
 
 		return filteredRegions[2].split(C.REGION_LIST_DELIMITER).map((regionPair) => {
 			let [regionName, regionShortCode = null] = regionPair.split(C.SINGLE_REGION_DELIMITER);
@@ -96,10 +96,10 @@ export default class RegionDropdown extends PureComponent {
 	getDefaultOption () {
 		const { blankOptionLabel, showDefaultOption, defaultOptionLabel, country } = this.props;
 		if (!country) {
-			return <option value="">{blankOptionLabel}</option>;
+			return <option key="default" value="">{blankOptionLabel}</option>;
 		}
 		if (showDefaultOption) {
-			return <option value="">{defaultOptionLabel}</option>;
+			return <option key="default" value="">{defaultOptionLabel}</option>;
 		}
 		return null;
 	}
@@ -108,7 +108,7 @@ export default class RegionDropdown extends PureComponent {
 		const {
 			value, country, onChange, onBlur, id, name, classes, disabled, blankOptionLabel, showDefaultOption,
 			defaultOptionLabel, labelType, valueType, countryValueType, disableWhenEmpty, customOptions,
-			...arbitraryProps
+			whitelist, blacklist, regionTypes, ...arbitraryProps
 		} = this.props;
 
 		const isDisabled = disabled || (disableWhenEmpty && country === '');
@@ -130,7 +130,7 @@ export default class RegionDropdown extends PureComponent {
 		return (
 			<select {...attrs}>
 				{this.getDefaultOption()}
-				{this.getRegionList()}
+				{this.state.regions.length && this.getRegionList()}
 			</select>
 		);
 	}
@@ -154,7 +154,8 @@ RegionDropdown.propTypes = {
 	blacklist: PropTypes.object,
 	disabled: PropTypes.bool,
 	disableWhenEmpty: PropTypes.bool,
-	customOptions: PropTypes.array
+	customOptions: PropTypes.array,
+	regionTypes: PropTypes.object
 };
 RegionDropdown.defaultProps = {
 	country: '',
@@ -174,5 +175,6 @@ RegionDropdown.defaultProps = {
 	blacklist: {},
 	disabled: false,
 	disableWhenEmpty: false,
-	customOptions: []
+	customOptions: [],
+	regionTypes: {}
 };

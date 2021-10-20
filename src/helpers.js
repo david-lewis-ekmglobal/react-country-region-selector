@@ -1,3 +1,5 @@
+import C from './constants';
+
 // reduces the subset of countries depending on whether the user specified a white/blacklist, and lists priority
 // countries first
 export const filterCountries = (countries, priorityCountries, whitelist, blacklist) => {
@@ -27,12 +29,13 @@ export const filterCountries = (countries, priorityCountries, whitelist, blackli
 };
 
 // called when requesting new regions. It reduces the subset of regions depending on whether the user specifies
-// a white/blacklist
-export const filterRegions = (regionsObject, whitelistObject, blacklistObject) => {
+// a white/blacklist and region types
+export const filterRegions = (regionsObject, whitelistObject, blacklistObject, regionTypesObject) => {
 	const [country, countryCode, regions] = regionsObject;
 	const whitelist = whitelistObject.hasOwnProperty(countryCode) ? whitelistObject[countryCode] : [];
 	const blacklist = blacklistObject.hasOwnProperty(countryCode) ? blacklistObject[countryCode] : [];
-	let filteredRegions = regions.split('|');
+	const regiontypes = regionTypesObject.hasOwnProperty(countryCode) ? regionTypesObject[countryCode] : [];
+	let filteredRegions = regions.split(C.REGION_LIST_DELIMITER);
 
 	if (whitelist.length > 0 && filteredRegions.length > 0) {
 		filteredRegions = filteredRegions.filter((region) => {
@@ -55,9 +58,29 @@ export const filterRegions = (regionsObject, whitelistObject, blacklistObject) =
 		});
 	}
 
+	if (regiontypes.length) {
+		filteredRegions = filteredRegions.filter((region) => {
+			for (let i = 0, n = regiontypes.length; i < n; i++) {
+				const regionData = region.split(C.SINGLE_REGION_DELIMITER);
+				if (regionData.length < 3) { return true; }
+				if (regionData[2] === regiontypes[i]) {
+					return true;
+				} else if (regionData[2].indexOf(C.REGION_TYPE_LIST_DELIMITER) > -1) {
+					let regionTypeOptions = regionData[2].split(C.REGION_TYPE_LIST_DELIMITER);
+					for (let j = 0, m = regionTypeOptions.length; j < m; j++) {
+						if (regionTypeOptions[j] === regiontypes[i]) {
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		});
+	}
+
 	return [
 		country,
 		countryCode,
-		filteredRegions.join('|')
+		filteredRegions.join(C.REGION_LIST_DELIMITER)
 	];
 };

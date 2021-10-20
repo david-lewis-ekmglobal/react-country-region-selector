@@ -1,7 +1,5 @@
 # react-country-region-selector
 
-[![Build Status](https://travis-ci.com/country-regions/react-country-region-selector.svg?branch=master)](https://travis-ci.com/country-regions/react-country-region-selector)
-
 - [About](#about)  
     - [Features](#features)
     - [Gotchas](#gotchas)
@@ -9,6 +7,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [List of component options](#options)
+- [Region types](#region-types)
 - [Command-line](#command-line)
 - [Changelog](#changelog)
 - [Tests](#tests)
@@ -20,7 +19,7 @@
 <a name="about"></a>
 ### About
 
-This library provides a pair of React components to display _connected_ country and region dropdowns (pick a country, it shows the relevant regions). If you're not using React, check out the [plain vanilla JS version](https://github.com/country-regions/country-region-selector) instead. The list of countries and regions is maintained separately and found in the [country-region-data](https://github.com/country-regions/country-region-data) repo.
+This library provides a pair of React components to display _connected_ country and region dropdowns (pick a country, it shows the relevant regions). If you're not using React, check out the [plain vanilla JS version](https://github.com/country-regions/country-region-selector) instead. The list of countries and regions is maintained separately and found in the [country-region-data](https://github.com/david-lewis-ekmglobal/country-region-data) repo.
 
 
 <a name="features"></a>
@@ -56,12 +55,10 @@ JSX code.
 <a name="installation"></a>
 ### Installation
 
-Using npm or yarn:
+Clone the repository, build the project, create a NPM package and use the tarball in your app.
 
-```javascript
-npm i react-country-region-selector
-yarn add react-country-region-selector
-```
+Please note, you'll need to change the `os` setting in package.json if you are building on a *nix-based system.
+
 
 <a name="features"></a>
 ### Usage
@@ -159,8 +156,43 @@ specified here will be added directly to the `<select>` DOM element._
 | disabled | No | `false` | `boolean` | Disables the region field. If set to true, it overrides `disableWhenEmpty` | 
 | customOptions | No | `[]` | `Array<string>` | Appends a list of string to the every region dropdown, regardless of the country selected.
 | whitelist | No | `{ CountryCode: [] }` | `object` | This setting lets you target specific regions to appear in the dropdown. Only those specified here will appear. This should be an array of region codes keyed by the country code. |
-| blacklist | No | `{ CountryCode: [] }` | `object` | This setting lets you target specific regions that should *not* appear in the dropdown. This should be an array of region codes keyed by the country code. || disableWhenEmpty | No | `false` | `boolean` | Disables the region field when the user hasn't selected a country. |
+| blacklist | No | `{ CountryCode: [] }` | `object` | This setting lets you target specific regions that should *not* appear in the dropdown. This should be an array of region codes keyed by the country code. |
+| regionTypes | No | `{ CountryCode: [] }` | `object` | This setting lets you target specific types of regions (e.g. States, Territories, English Counties, etc.) that should appear in the dropdown. This should be an array of region types keyed by the country code. |
 | disabled | No | `false` | `boolean` | Disables the region field. If set to true, it overrides `disableWhenEmpty` |
+
+
+<a name="region-types"></a>
+### Region Types
+
+United Kingdom
+Examples of configuration for the United Kingdom
+
+- Government Office Regions
+`regionTypes['GB'] = ['40']`
+- Ceremonial Counties
+`regionTypes['GB'] = ['42']`
+- London Boroughs
+`regionTypes['GB'] = ['44']`
+- Metropolitan Boroughs
+`regionTypes['GB'] = ['46']`
+- Unitary Authorities
+`regionTypes['GB'] = ['48']`
+- Metropolitan Counties
+`regionTypes['GB'] = ['52']`
+- Metropolitan and Non-Metropolitan Counties  
+`regionTypes['GB'] = ['50', '52']`
+- Counties of the United Kingdom
+`regionTypes['GB'] = ['10', '25', '35', '42']
+
+United States
+Examples of configuration for the United Kingdom
+
+- States
+`regionTypes['US'] = ['110']`
+- States and Washington D.C.
+`regionTypes['US'] = ['110', '120']`
+- Overseas Territories
+`regionTypes['US'] = ['130']`
 
 
 <a name="command-line"></a>
@@ -169,7 +201,7 @@ specified here will be added directly to the `<select>` DOM element._
 Check out the `scripts` section of the package.json file to see them all, but these are the highlights:
 
 - `npm start` - regenerate everything, plus a watcher for local development.
-- `npm build` - build the dist files again. No watcher.
+- `npm build` - build the dist files again. No watcher. Includes all countries in the rollup build.
 - `rollup -c --config-countries=UK,US` - generate a custom build of the script `/dist` folder containing only those
 countries you specify here. This *seriously* reduces file size, so if you can do it, do it.
 
@@ -239,7 +271,7 @@ organization
 <a name="tests"></a>
 ### Tests
 
-The Jest/Enzyme unit tests are found in the `src/tests` folder. The repo is hooked up to Travis CI to automatically run the tests for each commit.
+The Jest/Enzyme unit tests are found in the `src/tests` folder.
 
 
 <a name="localDev"></a>
