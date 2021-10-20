@@ -8,6 +8,11 @@ import json from 'rollup-plugin-json';
 import parseCountryList from './rollup-plugin-parse-country-list';
 import pkg from './package.json';
 
+import * as react from 'react';
+import * as reactDom from 'react-dom';
+import * as reactIs from 'react-is';
+import * as propTypes from 'prop-types';
+
 const argv = require('minimist')(process.argv.slice(2));
 
 // e.g. rollup -c --config-countries=GB,CA,US
